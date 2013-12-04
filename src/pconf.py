@@ -31,6 +31,11 @@ except:
 
 from fh import *
 
+param_dirs = ['prefix', 'exec_prefix', 'bindir', 'sbindir', 'libexecdir', 'sysconfdir', 
+              'sharedstatedir', 'localstatedir', 'libdir', 'includedir', 'oldincludedir', 
+              'datarootdir', 'datadir', 'infodir', 'localedir', 'mandir', 'docdir',
+              'htmldir', 'dvidir', 'pdfdir', 'psdir']
+
 args = ['./configure']
 args += ['--%s=%s' % (d, evald_dirs[d]) for d in param_dirs]
 args += extra_args

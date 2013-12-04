@@ -51,8 +51,6 @@ dirs = {'prefix'         : '/usr/local',
         'pdfdir'         : '{docdir}',
         'psdir'          : '{docdir}'}
 
-param_dirs = ('root_prefix', 'usr_prefix', 'local_prefix', 'var_prefix')
-param_dirs = list(filter(lambda e : e not in param_dirs, dirs.keys()))
 for d in dirs.keys():
     dirs[d] = dirs[d].replace('{', '\1').replace('}', '\1')
 
