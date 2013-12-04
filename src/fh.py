@@ -25,22 +25,45 @@ fhconf = os.getenv('SYSCONFDIR', '/etc') + '/fh.conf'
 if not (os.path.exists(fhconf) and os.path.isfile(fhconf)):
     fhconf = '/fh.conf'
 
-dirs = {'prefix'         : '/usr/local',
+dirs = {'destdir'        : '/install_intermediate', # in case you forget to specify it
+        'user_home'      : os.getenv('HOME'), # syntactical sugar
+        'prefix'         : '/usr',
         'exec_prefix'    : '{prefix}',
+
         'var_prefix'     : '{root_prefix}',
         'root_prefix'    : '',
         'usr_prefix'     : '/usr',
-        'local_prefix'   : '{usr_prefix}/local',
-        'bindir'         : '{exec_prefix}/bin',
-        'sbindir'        : '{exec_prefix}/sbin',
-        'libexecdir'     : '{exec_prefix}/libexec',
-        'sysconfdir'     : '{var_prefix}/etc',
-        'sharedstatedir' : '{var_prefix}/com',
-        'localstatedir'  : '{var_prefix}/var',
-        'libdir'         : '{exec_prefix}/lib',
-        'includedir'     : '{prefix}/include',
+        'local_prefix'   : '{usr_prefix}{local_infix}',
+        
+        'local_infix'    : '/local',
+        'games_infix'    : '/games',
+        
+        'bin'            : '/bin',
+        'sbin'           : '/sbin',
+        'libexec'        : '/libexec',
+        'sysconf'        : '/etc',
+        'com'            : '/com',
+        'var'            : '/var',
+        'lib'            : '/lib',
+        'include'        : '/include',
+        'data'           : '/share',
+        'proc'           : '/proc',
+        'sys'            : '/sys',
+        'run'            : '/run',
+        'tmp'            : '/tmp',
+        'srv'            : '/srv',
+        'skel'           : '/skel',
+        
+        'bindir'         : '{exec_prefix}{bin}',
+        'sbindir'        : '{exec_prefix}{sbin}',
+        'libexecdir'     : '{exec_prefix}{libexec}',
+        'sysconfdir'     : '{var_prefix}{sysconf}',
+        'sharedstatedir' : '{var_prefix}{com}',
+        'localstatedir'  : '{var_prefix}{var}',
+        'libdir'         : '{exec_prefix}{lib}',
+        'includedir'     : '{prefix}{include}',
         'oldincludedir'  : '/usr/include',
-        'datarootdir'    : '{prefix}/share',
+        'datarootdir'    : '{prefix}{share}',
         'datadir'        : '{datarootdir}',
         'infodir'        : '{datarootdir}/info',
         'localedir'      : '{datarootdir}/locale',
@@ -49,7 +72,45 @@ dirs = {'prefix'         : '/usr/local',
         'htmldir'        : '{docdir}',
         'dvidir'         : '{docdir}',
         'pdfdir'         : '{docdir}',
-        'psdir'          : '{docdir}'}
+        'psdir'          : '{docdir}',
+        'pkgconfigdir'   : '{libdir}/pkgconfig',
+        'apirootdir'     : '',
+        'devdir'         : '{apirootdir}',
+        'ptsdir'         : '{devdir}/pts',
+        'shmdir'         : '{devdir}/shm',
+        'procdir'        : '{apirootdir}{proc}',
+        'sysdir'         : '{apirootdir}{sys}',
+        'rundir'         : '{var_prefix}{run}',
+        'tmpdir'         : '{var_prefix}{tmp}',
+        'vartmpdir'      : '{localstatedir}{tmp}',
+        'srvdir'         : '{var_prefix}{srv}',
+        'dbdir'          : '{srvdir}/db',
+        'ftpdir'         : '{srvdir}/ftp',
+        'httpdir'        : '{srvdir}/http',
+        'skeldir'        : '{sysconfdir}{skel}',
+        'profiledir'     : '{sysconfdir}/profile.d'
+        'appdir'         : '{datarootdir}/applications',
+        'changelogdir'   : '{datarootdir}/changelogs',
+        'dictdir'        : '{datarootdir}/dict',
+        'licensedir'     : '{datarootdir}/licenses',
+        'miscdir'        : '{datarootdir}/misc',
+        'srcdir'         : '{prefix}/src',
+        'rootdir'        : '/root',
+        'homedir'        : '/home',
+        'mntdir'         : '/mnt',
+        'mediadir'       : '/media',
+        'cachedir'       : '{localstatedir}/cache',
+        'emptydir'       : '{localstatedir}/empty',
+        'gamesdir'       : '{localstatedir}/games',
+        'statedir'       : '{localstatedir}/lib',
+        'lockdir'        : '{localstatedir}/lock',
+        'logdir'         : '{localstatedir}/log',
+        'maildir'        : '{localstatedir}/mail',
+        'spooldir'       : '{localstatedir}/spool',
+        'lddir'          : '{sysconfdir}/ld.so.conf.d',
+        'opt_infix'      : '/opt/{pkgname}',
+        'opt_prefix'     : '/opt/{pkgname}'}
+
 
 for d in dirs.keys():
     dirs[d] = dirs[d].replace('{', '\1').replace('}', '\1')
@@ -108,22 +169,44 @@ for arg in sys.argv[1:]:
     elif arg == '--':
         dashed = True
     elif arg == '--/':
-        dirs['prefix']      = '/usr'
-        dirs['exec_prefix'] = ''
-        dirs['var_prefix']  = ''
+        dirs['prefix']         = '{usr_prefix}'
+        dirs['exec_prefix']    = '{root_prefix}'
+        dirs['var_prefix']     = '{root_prefix}'
     elif arg == '--/usr':
-        dirs['prefix']      = '/usr'
-        dirs['exec_prefix'] = '/usr'
-        dirs['var_prefix']  = ''
+        dirs['prefix']         = '{usr_prefix}'
+        dirs['exec_prefix']    = '{usr_prefix}'
+        dirs['var_prefix']     = '{root_prefix}'
     elif arg == '--/usr/local':
-        dirs['prefix']      = '/usr/local'
-        dirs['exec_prefix'] = '/usr/local'
-        dirs['var_prefix']  = ''
+        dirs['prefix']         = '{local_prefix}'
+        dirs['exec_prefix']    = '{local_prefix}'
+        dirs['var_prefix']     = '{root_prefix}'
+        dirs['localstatedir']  = '{var_prefix}{local_infix}/var'
+    elif arg == '--/usr/games':
+        dirs['prefix']         = '{usr_prefix}{games_infix}'
+        dirs['exec_prefix']    = '{usr_prefix}{games_infix}'
+        dirs['var_prefix']     = '{root_prefix}'
+    elif arg == '--/usr/local/games':
+        dirs['prefix']         = '{local_prefix}{games_infix}'
+        dirs['exec_prefix']    = '{local_prefix}{games_infix}'
+        dirs['var_prefix']     = '{root_prefix}'
+        dirs['localstatedir']  = '{var_prefix}{local_infix}/var'
     elif arg == '--/home':
-        dirs['prefix']      = os.getenv('HOME') + '/.local'
-        dirs['exec_prefix'] = os.getenv('HOME') + '/.local'
-        dirs['var_prefix']  = os.getenv('HOME') + '/.local'
-        dirs['sysconfdir']  = os.getenv('HOME') + '/.config'
+        dirs['prefix']         = '{user_home}/.local'
+        dirs['exec_prefix']    = '{user_home}/.local'
+        dirs['var_prefix']     = '{user_home}/.local'
+        dirs['sysconfdir']     = '{user_home}/.config'
+    elif arg == '--/opt':
+        dirs['prefix']         = '{opt_prefix}'
+        dirs['exec_prefix']    = '{opt_prefix}'
+        dirs['sysconfdir']     = '{var_prefix}/etc{opt_infix}'
+        dirs['sharedstatedir'] = '{var_prefix}/com{opt_infix}'
+        dirs['localstatedir']  = '{var_prefix}/var{opt_infix}'
+    elif arg == '--/home/opt':
+        dirs['prefix']         = '{user_home}/.local{opt_prefix}'
+        dirs['exec_prefix']    = '{user_home}/.local{opt_prefix}'
+        dirs['sysconfdir']     = '{user_home}/.config{opt_infix}'
+        dirs['sharedstatedir'] = '{user_home}/.local{var_prefix}/com{opt_infix}'
+        dirs['localstatedir']  = '{user_home}/.local{var_prefix}/var{opt_infix}'
     elif arg.startswith('--') and ('=' in arg):
         dirs[arg[2:].split('=')[0]] = '='.join(arg.split('=')[1:])
     elif arg.startswith('--'):
