@@ -32,9 +32,9 @@ except:
 from fh import *
 
 args = []
-args.append('DESTDIR='   + evald_dirs('destdir'))
-args.append('DIST_ROOT=' + evald_dirs('destdir'))
-args.append('PREFIX=' + evald_dirs('exec_prefix'))
+args.append('DESTDIR='   + evald_dirs['destdir'])
+args.append('DIST_ROOT=' + evald_dirs['destdir'])
+args.append('PREFIX=' + evald_dirs['exec_prefix'])
 
 make(args + extra_args)
 
