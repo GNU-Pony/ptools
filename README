@@ -1,0 +1,6 @@
+Software package installations tools:
+
+pconf	 Runs `./configure` with configurations
+pmake	 Runs `make` with configurations
+pclean	 Removes unwanted files
+
