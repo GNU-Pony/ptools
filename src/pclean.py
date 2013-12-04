@@ -31,15 +31,35 @@ except:
 
 from fh import *
 
-i_use_info   = get('I_USE_INFO',   'y').lower().startswith('y')
-i_use_man    = get('I_USE_MAN',    'y').lower().startswith('y')
-i_use_locale = get('I_USE_LOCALE', '*')
+pkgdir  = evald_dirs['destdir']
+pkgname = evald_dirs['pkgname']
 
-infodir   = evald_dirs['destdir'] + evald_dirs['infodir']
-mandir    = evald_dirs['destdir'] + evald_dirs['mandir']
-localedir = evald_dirs['destdir'] + evald_dirs['localedir']
+i_use_info    = get('I_USE_INFO',    'y').lower().startswith('y')
+i_use_man     = get('I_USE_MAN',     'y').lower().startswith('y')
+i_use_locale  = get('I_USE_LOCALE',  '*')
+i_use_license = get('I_USE_LICENSE', 'y').lower().startswith('y')
+
+infodir     = pkgdir + evald_dirs['infodir']
+mandir      = pkgdir + evald_dirs['mandir']
+localedir   = pkgdir + evald_dirs['localedir']
+licensedir  = pkgdir + evald_dirs['licensedir']
+datarootdir = pkgdir + evald_dirs['datarootdir']
+
 
 if not i_use_info:  rm_r(pkgdir + infodir)
 if not i_use_man:   rm_r(pkgdir + mandir)
 filter_locale(i_use_locale, pkgdir, None, localedir)
+
+if not i_use_license:
+    _dir = '%s/%s' % (i_use_license, pkgname)
+    if os.path.exists(_dir):
+        if os.path.islink(_dir):
+            rm(_dir)
+        else:
+            rm_r(_dir)
+
+
+if os.path.exists(datarootdir) and os.path.isdir(datarootdir):
+    if len(os.listdir(datarootdir)) == 0:
+        rmdir(_dir)
 
