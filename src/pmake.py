@@ -31,15 +31,10 @@ except:
 
 from fh import *
 
-i_use_info   = get('I_USE_INFO',   'y').lower().startswith('y')
-i_use_man    = get('I_USE_MAN',    'y').lower().startswith('y')
-i_use_locale = get('I_USE_LOCALE', '*')
+args = []
+args.append('DESTDIR='   + evald_dirs('destdir'))
+args.append('DIST_ROOT=' + evald_dirs('destdir'))
+args.append('PREFIX=' + evald_dirs('exec_prefix'))
 
-infodir   = evald_dirs['destdir'] + evald_dirs['infodir']
-mandir    = evald_dirs['destdir'] + evald_dirs['mandir']
-localedir = evald_dirs['destdir'] + evald_dirs['localedir']
-
-if not i_use_info:  rm_r(pkgdir + infodir)
-if not i_use_man:   rm_r(pkgdir + mandir)
-filter_locale(i_use_locale, pkgdir, None, localedir)
+make(args + extra_args)
 
