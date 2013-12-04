@@ -31,7 +31,7 @@ except:
 
 from fh import *
 
-args = ['echo', './configure']
+args = ['./configure']
 args += ['--%s=%s' % (d, evald_dirs[d]) for d in param_dirs]
 args += extra_args
 
