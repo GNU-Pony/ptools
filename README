@@ -1,4 +1,4 @@
-Software package installations tools:
+Software package installation tools:
 
 pconf	 Runs `./configure` with configurations
 pmake	 Runs `make` with configurations

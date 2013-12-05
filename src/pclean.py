@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-ptools – software package installations tools
+ptools – software package installation tools
 
 Copyright © 2013  Mattias Andrée (maandree@member.fsf.org)
 
