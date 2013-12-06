@@ -41,17 +41,20 @@ i_use_doc     = get('I_USE_DOC',     'y').lower().startswith('y')
 i_use_locale  = get('I_USE_LOCALE',  '*')
 i_use_license = get('I_USE_LICENSE', 'y').lower().startswith('y')
 
-includedir  = pkgdir + evald_dirs['includedir']
-infodir     = pkgdir + evald_dirs['infodir']
-mandir      = pkgdir + evald_dirs['mandir']
-docdir      = pkgdir + evald_dirs['docdir']
-localedir   = pkgdir + evald_dirs['localedir']
-licensedir  = pkgdir + evald_dirs['licensedir']
+includedir   = pkgdir + evald_dirs['includedir']
+pkgconfigdir = pkgdir + evald_dirs['pkgconfigdir']
+infodir      = pkgdir + evald_dirs['infodir']
+mandir       = pkgdir + evald_dirs['mandir']
+docdir       = pkgdir + evald_dirs['docdir']
+localedir    = pkgdir + evald_dirs['localedir']
+licensedir   = pkgdir + evald_dirs['licensedir']
 
 datarootdir = pkgdir + evald_dirs['datarootdir']
 
 
-if not i_use_devel:  rm_r(pkgdir + includedir)
+if not i_use_devel:
+    rm_r(pkgdir + includedir)
+    rm_r(pkgdir + pkgconfigdir)
 if not i_use_info:   rm_r(pkgdir + infodir)
 if not i_use_man:    rm_r(pkgdir + mandir)
 if not i_use_doc:    rm_r(pkgdir + docdir)
