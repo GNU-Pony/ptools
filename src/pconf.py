@@ -36,7 +36,11 @@ param_dirs = ['prefix', 'exec_prefix', 'bindir', 'sbindir', 'libexecdir', 'sysco
               'datarootdir', 'datadir', 'infodir', 'localedir', 'mandir', 'docdir',
               'htmldir', 'dvidir', 'pdfdir', 'psdir']
 
-args = ['./configure' if (os.path.exists('./configure')) else './Configure']
+configure_script = './configure' if (os.path.exists('./configure')) else './Configure'
+if 'configure-script' in dirs:
+    configure_script = dirs[configure-script]
+
+args = [configure_script]
 args += ['--%s=%s' % (d, evald_dirs[d]) for d in param_dirs]
 args += extra_args
 
