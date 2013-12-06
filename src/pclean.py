@@ -29,6 +29,13 @@ except:
     sys.exit(1)
 
 
+rm_r_ = rm_r
+def rm_r(ps):
+    for p in ([ps] if isinstance(ps, str) else ps):
+        if os.path.exists(p):
+            rm_r(p)
+
+
 from fh import *
 
 pkgdir  = evald_dirs['destdir']
