@@ -29,7 +29,7 @@ dirs = {'destdir'        : '/install_intermediate', # in case you forget to spec
         'user_home'      : os.getenv('HOME'), # syntactical sugar
         'prefix'         : '/usr',
         'exec_prefix'    : '{prefix}',
-
+        
         'var_prefix'     : '{root_prefix}',
         'root_prefix'    : '',
         'usr_prefix'     : '/usr',
@@ -53,6 +53,11 @@ dirs = {'destdir'        : '/install_intermediate', # in case you forget to spec
         'tmp'            : '/tmp',
         'srv'            : '/srv',
         'skel'           : '/skel',
+        'dev'            : '/dev',
+        'pts'            : '/pts',
+        'shm'            : '/shm',
+        'dev_pts'        : '{dev}{pts}',
+        'dev_shm'        : '{dev}{shm}',
         
         'bindir'         : '{exec_prefix}{bin}',
         'sbindir'        : '{exec_prefix}{sbin}',
@@ -63,7 +68,7 @@ dirs = {'destdir'        : '/install_intermediate', # in case you forget to spec
         'libdir'         : '{exec_prefix}{lib}',
         'includedir'     : '{prefix}{include}',
         'oldincludedir'  : '/usr/include',
-        'datarootdir'    : '{prefix}{share}',
+        'datarootdir'    : '{prefix}{data}',
         'datadir'        : '{datarootdir}',
         'infodir'        : '{datarootdir}/info',
         'localedir'      : '{datarootdir}/locale',
@@ -75,9 +80,9 @@ dirs = {'destdir'        : '/install_intermediate', # in case you forget to spec
         'psdir'          : '{docdir}',
         'pkgconfigdir'   : '{libdir}/pkgconfig',
         'apirootdir'     : '',
-        'devdir'         : '{apirootdir}',
-        'ptsdir'         : '{devdir}/pts',
-        'shmdir'         : '{devdir}/shm',
+        'devdir'         : '{apirootdir}{dev}',
+        'ptsdir'         : '{devdir}{pts}',
+        'shmdir'         : '{devdir}{shm}',
         'procdir'        : '{apirootdir}{proc}',
         'sysdir'         : '{apirootdir}{sys}',
         'rundir'         : '{var_prefix}{run}',
