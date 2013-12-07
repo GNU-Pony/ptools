@@ -51,6 +51,7 @@ args.append(_bool('largefiles', 'y'))
 args.append(_bool('valgrind',   'n'))
 args.append(_bool('audit',      'y'))
 args.append(_bool('selinux',    'n'))
+args.append(_bool('nls',        'y'))
 args += extra_args
 
 execute(args)
