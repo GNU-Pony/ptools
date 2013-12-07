@@ -1,6 +1,8 @@
 Software package installation tools:
 
-pconf	 Runs `./configure` with configurations
-pmake	 Runs `make` with configurations
-pclean	 Removes unwanted files
+pconf    Runs `./configure` with configurations
+pmake    Runs `make` with configurations
+pclean   Removes unwanted files
+pp	 Converts a generical FHS-compliant path a one following fh.conf, without support for prefixes
+	 (the second p standands for path)
 
