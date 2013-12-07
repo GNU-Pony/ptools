@@ -40,8 +40,14 @@ configure_script = './configure' if (os.path.exists('./configure')) else './Conf
 if 'configure-script' in dirs:
     configure_script = dirs[configure-script]
 
+_bool = lambda val : val.lower().startswith('y')
+
 args = [configure_script]
 args += ['--%s=%s' % (d, evald_dirs[d]) for d in param_dirs]
+args.append('--disable-option-checking')
+args.append('--enable-shared'     if _bool(get('I_USE_SHARED',     'y')) else '--disable-shared')
+args.append('--enable-static'     if _bool(get('I_USE_STATIC',     'n')) else '--disable-static')
+args.append('--enable-largefiles' if _bool(get('I_USE_LARGEFILES', 'y')) else '--disable-largefiles')
 args += extra_args
 
 execute(args)
