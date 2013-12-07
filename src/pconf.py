@@ -48,6 +48,7 @@ args.append('--disable-option-checking')
 args.append(_bool('shared',     'y'))
 args.append(_bool('static',     'n'))
 args.append(_bool('largefiles', 'y'))
+args.append(_bool('valgrind',   'n'))
 args += extra_args
 
 execute(args)
