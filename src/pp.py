@@ -98,7 +98,7 @@ for unresolved in extra_args:
         for (d, key) in table:
             if unresolved.startswith(d):
                 unresolved = unresolved[len(d) - 1:]
-                resolved += dirs[key]
+                resolved += evald_dirs[key]
                 break
         
         echo(resolved + unresolved[:-1].replace('/', os.sep))
