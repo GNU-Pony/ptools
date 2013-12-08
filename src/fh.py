@@ -29,6 +29,7 @@ dirs = {'destdir'        : '/install_intermediate', # in case you forget to spec
         'user_home'      : os.getenv('HOME'), # syntactical sugar
         'prefix'         : '/usr',
         'exec_prefix'    : '{prefix}',
+        'exec-prefix'    : '{exec_prefix}',
         
         'var_prefix'     : '{root_prefix}',
         'root_prefix'    : '',

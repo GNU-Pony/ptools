@@ -31,7 +31,7 @@ except:
 
 from fh import *
 
-param_dirs = ['prefix', 'exec_prefix', 'bindir', 'sbindir', 'libexecdir', 'sysconfdir', 
+param_dirs = ['prefix', 'exec-prefix', 'bindir', 'sbindir', 'libexecdir', 'sysconfdir', 
               'sharedstatedir', 'localstatedir', 'libdir', 'includedir', 'oldincludedir', 
               'datarootdir', 'datadir', 'infodir', 'localedir', 'mandir', 'docdir',
               'htmldir', 'dvidir', 'pdfdir', 'psdir']
