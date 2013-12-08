@@ -41,12 +41,14 @@ from fh import *
 pkgdir  = evald_dirs['destdir']
 pkgname = evald_dirs['pkgname']
 
-i_use_devel   = get('I_USE_DEVEL',   'y').lower().startswith('y')
-i_use_info    = get('I_USE_INFO',    'y').lower().startswith('y')
-i_use_man     = get('I_USE_MAN',     'y').lower().startswith('y')
-i_use_doc     = get('I_USE_DOC',     'y').lower().startswith('y')
-i_use_locale  = get('I_USE_LOCALE',  '*')
-i_use_license = get('I_USE_LICENSE', 'y').lower().startswith('y')
+i_use_devel      = get('I_USE_DEVEL',      'y').lower().startswith('y')
+i_use_info       = get('I_USE_INFO',       'y').lower().startswith('y')
+i_use_man        = get('I_USE_MAN',        'y').lower().startswith('y')
+i_use_man_locale = get('I_USE_MAN_LOCALE', '*')
+i_use_doc        = get('I_USE_DOC',        'y').lower().startswith('y')
+i_use_locale     = get('I_USE_LOCALE',     '*')
+i_use_locale_man = get('I_USE_LOCALE_MAN', 'en')
+i_use_license    = get('I_USE_LICENSE',    'y').lower().startswith('y')
 
 includedir   = pkgdir + evald_dirs['includedir']
 pkgconfigdir = pkgdir + evald_dirs['pkgconfigdir']
@@ -62,13 +64,33 @@ datarootdir = pkgdir + evald_dirs['datarootdir']
 if not i_use_devel:
     rm_r(pkgdir + includedir)
     rm_r(pkgdir + pkgconfigdir)
-if not i_use_info:   rm_r(pkgdir + infodir)
-if not i_use_man:    rm_r(pkgdir + mandir)
-if not i_use_doc:    rm_r(pkgdir + docdir)
+
+if not i_use_info:
+    rm_r(pkgdir + infodir)
+
+if not i_use_man:
+    rm_r(pkgdir + mandir)
+else:
+    _man = pkgdir + mandir
+    _en = _man + os.sep + 'en'
+    if not os.path.exists(_en):
+        mkdir_p(_en)
+        mv(path('%s/man?/' % path_escape(_man)), _en)
+    filter_locale(i_use_man_locale, pkgdir, None, mandir)
+    _lang = _man + os.sep + i_use_locale_man
+    if os.path.exists(_lang):
+        mv(os.listdir(_lang), _man)
+        rmdir(_lang)
+    if len(os.listdir(_man)) == 0:
+        rmdir(_man)
+
+if not i_use_doc:
+    rm_r(pkgdir + docdir)
+
 filter_locale(i_use_locale, pkgdir, None, localedir)
 
 if not i_use_license:
-    _dir = '%s/%s' % (i_use_license, pkgname)
+    _dir = '%s%s%s' % (i_use_license, os.sep, pkgname)
     if os.path.exists(_dir):
         if os.path.islink(_dir):
             rm(_dir)
