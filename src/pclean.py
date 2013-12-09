@@ -32,7 +32,7 @@ except:
 rm_r_ = rm_r
 def rm_r(ps):
     for p in ([ps] if isinstance(ps, str) else ps):
-        if os.path.exists(p):
+        if os.path.lexists(p):
             rm_r(p)
 
 
@@ -73,12 +73,12 @@ if not i_use_man:
 else:
     _man = pkgdir + mandir
     _en = _man + os.sep + 'en'
-    if not os.path.exists(_en):
+    if not os.path.lexists(_en):
         mkdir_p(_en)
         mv(path('%s/man?/' % path_escape(_man)), _en)
     filter_locale(i_use_man_locale, pkgdir, None, mandir)
     _lang = _man + os.sep + i_use_locale_man
-    if os.path.exists(_lang):
+    if os.path.lexists(_lang):
         mv(os.listdir(_lang), _man)
         rmdir(_lang)
     if len(os.listdir(_man)) == 0:
@@ -91,14 +91,14 @@ filter_locale(i_use_locale, pkgdir, None, localedir)
 
 if not i_use_license:
     _dir = '%s%s%s' % (i_use_license, os.sep, pkgname)
-    if os.path.exists(_dir):
+    if os.path.lexists(_dir):
         if os.path.islink(_dir):
             rm(_dir)
         else:
             rm_r(_dir)
 
 
-if os.path.exists(datarootdir) and os.path.isdir(datarootdir):
+if os.path.lexists(datarootdir) and os.path.isdir(datarootdir):
     if len(os.listdir(datarootdir)) == 0:
         rmdir(_dir)
 
