@@ -103,5 +103,5 @@ for unresolved in extra_args:
         
         echo(resolved + unresolved[:-1].replace('/', os.sep))
 
-return error
+sys.exit(error)
 
