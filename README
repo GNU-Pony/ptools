@@ -3,8 +3,10 @@ Software package installation tools:
 pconf    Runs `./configure` with configurations
 pmake    Runs `make` with configurations
 pclean   Removes unwanted files
-pp	 Converts a generical FHS-compliant path into a one following fh.conf, without support for prefixes
+pp	 Converts a generical FHS-compliant path into a one following
+	 fh.conf, without support for prefixes
 	 (the second p stands for path)
 pfh	 Extract a value of the directory table after configurations
 	 (fh stands for filesystem hierarchy)
+pgpp	 Run `gpp` with filesystem hierarchy variables
 
