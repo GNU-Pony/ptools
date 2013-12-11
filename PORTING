@@ -1,0 +1,25 @@
+This package depends on the package manager
+Spike and that the environment variable SPIKE_PATH
+is exported.
+
+The part of Spike that is used is dragonsuite.py.
+It is used for two things:
+
+*  Abstraction from Python and unification with Spike scrolls
+
+*  Persistence of the --shred option passed to Spike
+
+
+To port ptools to other distro:s (that do not use Spike)
+you can either:
+
+*  Replace all dragonsuite calls with functions provided
+   by Python
+
+*  Include dragonsuite.py from Spike and adapt all files
+   accordingly.
+
+
+Yes, I do not like this either, but I do think it is
+better than builting it into Spike.
+
