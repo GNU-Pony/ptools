@@ -41,6 +41,7 @@ if 'configure-script' in dirs:
     configure_script = dirs[configure-script]
 
 _bool = lambda opt, dft : '--%sable-%s' % ('en' if get('I_USE_' + opt.upper(), dft).lower().startswith('y') else 'dis', opt)
+_with = lambda opt, dft : '--with%s-%s' % ('' if get('I_USE_' + opt.upper(), dft).lower().startswith('y') else 'out', opt)
 
 args = [configure_script]
 args += ['--%s=%s' % (d, evald_dirs[d]) for d in param_dirs]
@@ -51,6 +52,7 @@ args.append(_bool('largefiles', 'y'))
 args.append(_bool('valgrind',   'n'))
 args.append(_bool('selinux',    'n'))
 args.append(_bool('nls',        'y'))
+args.append(_with('dmalloc',    'y'))
 args += extra_args
 
 execute(args)
