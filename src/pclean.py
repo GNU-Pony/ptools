@@ -42,6 +42,7 @@ pkgdir  = evald_dirs['destdir']
 pkgname = evald_dirs['pkgname']
 
 i_use_devel      = get('I_USE_DEVEL',      'y').lower().startswith('y')
+i_use_emacs      = get('I_USE_EMACS',      'y').lower().startswith('y')
 i_use_info       = get('I_USE_INFO',       'y').lower().startswith('y')
 i_use_man        = get('I_USE_MAN',        'y').lower().startswith('y')
 i_use_man_locale = get('I_USE_MAN_LOCALE', '*')
@@ -64,6 +65,9 @@ datarootdir = pkgdir + evald_dirs['datarootdir']
 if not i_use_devel:
     rm_r(pkgdir + includedir)
     rm_r(pkgdir + pkgconfigdir)
+
+if not i_use_emacs:
+    rm_r(pkgdir + datarootdir + '/emacs')
 
 if not i_use_info:
     rm_r(pkgdir + infodir)
