@@ -71,6 +71,8 @@ if not i_use_emacs:
 
 if not i_use_info:
     rm_r(pkgdir + infodir)
+else:
+    rm(pkgdir + infodir + '/dir')
 
 if not i_use_man:
     rm_r(pkgdir + mandir)
