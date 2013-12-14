@@ -40,18 +40,19 @@ configure_script = './configure' if (os.path.exists('./configure')) else './Conf
 if 'configure-script' in dirs:
     configure_script = dirs[configure-script]
 
-_bool = lambda opt, dft : '--%sable-%s' % ('en' if get('I_USE_' + opt.upper(), dft).lower().startswith('y') else 'dis', opt)
-_with = lambda opt, dft : '--with%s-%s' % ('' if get('I_USE_' + opt.upper(), dft).lower().startswith('y') else 'out', opt)
+_bool = lambda opt, dft : get('I_USE_' + opt.upper(), dft).lower().startswith('y')
+_able = lambda opt, dft : '--%sable-%s' % ('en' if _bool(opt, dft) else 'dis', opt)
+_with = lambda opt, dft : '--with%s-%s' % ('' if _bool(opt, dft) else 'out', opt)
 
 args = [configure_script]
 args += ['--%s=%s' % (d, evald_dirs[d]) for d in param_dirs]
 args.append('--disable-option-checking')
-args.append(_bool('shared',     'y'))
-args.append(_bool('static',     'n'))
-args.append(_bool('largefiles', 'y'))
-args.append(_bool('valgrind',   'n'))
-args.append(_bool('selinux',    'n'))
-args.append(_bool('nls',        'y'))
+args.append(_able('shared',     'y'))
+args.append(_able('static',     'n'))
+args.append(_able('largefiles', 'y'))
+args.append(_able('valgrind',   'n'))
+args.append(_able('selinux',    'n'))
+args.append(_able('nls',        'y'))
 args.append(_with('dmalloc',    'y'))
 args += extra_args
 
