@@ -53,6 +53,7 @@ args.append(_able('largefiles', 'y'))
 args.append(_able('valgrind',   'n'))
 args.append(_able('selinux',    'n'))
 args.append(_able('nls',        'y'))
+args.append(_able('rpath',      'y'))
 args.append(_with('dmalloc',    'y'))
 args += extra_args
 
